@@ -10,6 +10,7 @@
   <body>
     <header class="site-header" id="home">
       <nav class="site-nav" aria-label="主导航">
+        <a class="site-nav__brand" href="#home">沈风华 <span>AI Operations</span></a>
         <a href="#home">首页</a>
         <a href="#solutions">方案</a>
         <a href="#case-study">案例</a>
@@ -19,23 +20,31 @@
     </header>
     <main>
       <section class="hero" aria-labelledby="hero-title">
-        <div class="hero__content">
-          <p class="eyebrow">AI-Powered Operations Management</p>
-          <h1 id="hero-title">运营管理智能自动化</h1>
-          <p class="hero__subtitle">业务理解 × AI 工具 × 运营落地</p>
-          <p class="hero__lead">帮助企业老板和管理团队识别可落地的 AI 场景，构建企业知识库、自动报告、数据分析看板和运营自动化 demo，让 AI 从概念进入真实业务流程。</p>
-          <div class="hero__actions" aria-label="主要联系入口">
-            <a class="button button--primary" href="#contact">微信联系</a>
-            <a class="button button--secondary" href="mailto:fenghua.shen@163.com">邮件交流</a>
+        <div class="hero__inner">
+          <div class="hero__content">
+            <p class="eyebrow">AI-Powered Operations Management</p>
+            <h1 id="hero-title">运营管理智能自动化</h1>
+            <p class="hero__subtitle">业务理解 × AI 工具 × 运营落地</p>
+            <p class="hero__lead">帮助企业老板和管理团队识别可落地的 AI 场景，构建企业知识库、自动报告、数据分析看板和运营自动化 demo，让 AI 从概念进入真实业务流程。</p>
+            <div class="hero__actions" aria-label="主要联系入口">
+              <a class="button button--primary" href="#contact">微信联系</a>
+              <a class="button button--secondary" href="mailto:fenghua.shen@163.com">邮件交流</a>
+            </div>
+            <ul class="credential-list" aria-label="个人可信度标签">
+              <li>工程管理硕士</li>
+              <li>英语本科背景</li>
+              <li>EPC / PMC / EPCm 项目经验</li>
+              <li>项目控制与运营管理</li>
+              <li>iOS App Store 上架开发者</li>
+              <li>企业 AI 落地实践</li>
+            </ul>
           </div>
-          <ul class="credential-list" aria-label="个人可信度标签">
-            <li>工程管理硕士</li>
-            <li>英语本科背景</li>
-            <li>EPC / PMC / EPCm 项目经验</li>
-            <li>项目控制与运营管理</li>
-            <li>iOS App Store 上架开发者</li>
-            <li>企业 AI 落地实践</li>
-          </ul>
+          <aside class="hero-proof" aria-label="专业背景概览">
+            <img src="assets/profile-photo.jpg" alt="沈风华的职业肖像">
+            <p class="hero-proof__label">20+ YEARS</p>
+            <p>项目管理与项目控制经验</p>
+            <span>Power Platform · Power BI</span>
+          </aside>
         </div>
       </section>
 
@@ -139,21 +148,25 @@
           <p>已独立开发并在 Apple App Store 发布多款应用。</p>
           <div class="work-grid">
             <article>
+              <img class="work-card__media" src="assets/app-paw-diary.png" alt="爪爪日记 Paw Diary 应用界面截图">
               <h3>爪爪日记 - Paw Diary</h3>
               <p>宠物日记与陪伴记录应用。</p>
               <a href="https://apps.apple.com/bh/app/paw-diary-pet-journal/id6763902027">在 App Store 查看</a>
             </article>
             <article>
+              <img class="work-card__media" src="assets/app-zen-flow.png" alt="柔指流绘 Zen Flow 应用界面截图">
               <h3>柔指流绘 - Zen Flow</h3>
               <p>正念手指绘画与流动绘画应用。</p>
               <a href="https://apps.apple.com/us/app/zen-flow-drawing/id6767100791">在 App Store 查看</a>
             </article>
             <article>
+              <img class="work-card__media" src="assets/app-siply.jpg" alt="浮生慢饮 Siply 应用视频画面">
               <h3>浮生慢饮 - Siply</h3>
               <p>饮品与心情记录应用。</p>
               <a href="https://apps.apple.com/us/app/siply-drinks-and-mood/id6770444422">在 App Store 查看</a>
             </article>
             <article>
+              <img class="work-card__media" src="assets/app-liminal.jpg" alt="向死而生 Liminal 应用视频画面">
               <h3>向死而生 - Liminal</h3>
               <p>以死亡提醒为主题的人生可视化应用。</p>
               <a href="https://apps.apple.com/us/app/liminal-memento-mori/id6773703824">在 App Store 查看</a>
@@ -167,10 +180,13 @@
           <p class="eyebrow">Profile</p>
           <h2 id="profile-title">沈风华</h2>
           <p class="profile__positioning">业务理解 × AI 工具 × 运营落地</p>
-          <div class="profile__summary">
-            <p>工程管理硕士，本科英语。从事工程管理相关工作，熟悉 EPC、PMC、EPCm 项目类型。</p>
-            <p>熟悉项目控制，包括进度管理、费用控制、合同与回款相关管理意识；也熟悉企业运营管理，包括董事会事项、中外沟通、跨部门协同、管理报告。</p>
-            <p>具备 AI 工具、企业知识库、自动报告、数据分析、本地大模型部署等实践探索，并独立开发 iOS App，已在 Apple App Store 发布多款应用。</p>
+          <div class="profile-layout">
+            <img class="profile-photo" src="assets/profile-photo.jpg" alt="沈风华的职业肖像">
+            <div class="profile__summary">
+              <p>工程管理硕士，本科英语。从事工程管理与项目控制工作二十余年，熟悉石油、化工、核电、医疗及食品饮料等行业的项目环境，以及 EPC、PMC、EPCm 项目类型。</p>
+              <p>熟悉项目控制，包括进度管理、费用控制、合同与回款相关管理意识；也熟悉企业运营管理，包括董事会事项、中外沟通、跨部门协同、管理报告。</p>
+              <p>具备 Power Platform、Power BI、AI 工具、企业知识库、自动报告、数据分析、本地大模型部署及全球项目管理系统设计开发等实践探索，并独立开发 iOS App，已在 Apple App Store 发布多款应用。</p>
+            </div>
           </div>
         </div>
       </section>

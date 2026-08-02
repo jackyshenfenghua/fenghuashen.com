@@ -52,4 +52,27 @@ assert.ok(statSync('assets/aoms-dashboard-clean.png').size > 100_000, 'clean AOM
 assert.match(html, /assets\/aoms-dashboard-clean\.png/, 'homepage must reference the clean AOMS screenshot');
 assert.doesNotMatch(html, /codex-clipboard-9b0e1df4-2615-4223-b827-aefb33352005\.png/, 'homepage must not reference the temporary upload path');
 
+for (const asset of [
+  'assets/profile-photo.jpg',
+  'assets/app-paw-diary.png',
+  'assets/app-zen-flow.png',
+  'assets/app-siply.jpg',
+  'assets/app-liminal.jpg'
+]) {
+  assert.equal(existsSync(asset), true, `${asset} must exist`);
+  assert.ok(statSync(asset).size > 20_000, `${asset} should be a real image asset`);
+  assert.match(html, new RegExp(asset.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')), `homepage must reference ${asset}`);
+}
+
+const css = read('styles.css');
+
+for (const token of ['--ink', '--surface', '--accent-blue', '--accent-teal', '--accent-green', '--accent-warm']) {
+  assert.match(css, new RegExp(token), `missing CSS design token ${token}`);
+}
+
+assert.match(css, /@media\s*\(max-width:\s*760px\)/, 'mobile breakpoint is required');
+assert.doesNotMatch(css, /letter-spacing\s*:\s*-\d/, 'negative letter spacing is not allowed');
+assert.doesNotMatch(css, /font-size\s*:\s*[^;]*vw/, 'viewport-width font sizing is not allowed');
+assert.doesNotMatch(css, /border-radius\s*:\s*(?:9|[1-9]\d)px/, 'pixel border radii above 8px are not allowed');
+
 console.log('Static scaffold checks passed.');
