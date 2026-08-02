@@ -90,21 +90,26 @@
         </div>
       </section>
 
-      <section id="case-study" class="section" aria-labelledby="case-title">
+      <section id="case-study" class="section section--case" aria-labelledby="case-title">
         <div class="section__inner">
-          <p class="eyebrow">Operations Demo</p>
-          <h2 id="case-title">企业运营管理智能化 Demo</h2>
-          <article class="case-study">
-            <h3>从经营数据到管理动作</h3>
-            <p>以企业运营管理场景为原型，串联资料归集、知识检索、指标分析和报告输出，帮助管理者更快识别进度、费用、合同与回款相关事项。</p>
-            <ul>
-              <li>统一沉淀制度、项目资料和管理口径</li>
-              <li>按业务问题检索信息并形成可追溯回答</li>
-              <li>将关键指标汇总为面向管理层的报告素材</li>
-            </ul>
-          </article>
+          <div class="section-heading">
+            <p class="eyebrow">Applied Demo</p>
+            <h2 id="case-title">企业运营管理智能化 Demo</h2>
+            <p>围绕合同、项目执行、市场商务、财务管理、知识库和 AI 助手，将运营数据、管理动作和 AI 能力整合到一个可演示的业务系统中。</p>
+          </div>
+          <figure class="case-figure">
+            <button class="case-figure__button" type="button" data-dialog-target="aoms-dialog" aria-label="放大查看企业运营管理智能化 Demo 截图">
+              <img src="assets/aoms-dashboard-clean.png" alt="自动化运营管理系统 AOMS 的数据看板、业务分类、滚动余额和运营模块截图">
+            </button>
+            <figcaption>Demo 展示合同、回款、业务分类、项目执行、知识库和 AI 助手等企业运营场景。</figcaption>
+          </figure>
         </div>
       </section>
+
+      <dialog class="image-dialog" id="aoms-dialog" aria-label="企业运营管理智能化 Demo 截图预览">
+        <button class="image-dialog__close" type="button" data-dialog-close aria-label="关闭预览">关闭</button>
+        <img src="assets/aoms-dashboard-clean.png" alt="">
+      </dialog>
 
       <section id="capabilities" class="section" aria-labelledby="capabilities-title">
         <div class="section__inner">
