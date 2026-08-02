@@ -6,6 +6,13 @@
     <title>沈风华 | 运营管理智能自动化</title>
     <meta name="description" content="沈风华：面向企业老板和管理团队的运营管理智能自动化与企业 AI 落地诊断。">
     <link rel="stylesheet" href="styles.css">
+    <style>
+      .js-ready .reveal { opacity: 0; transform: translateY(14px); transition: opacity 420ms ease, transform 420ms ease; }
+      .js-ready .reveal.is-visible { opacity: 1; transform: none; }
+      @media (prefers-reduced-motion: reduce) {
+        .js-ready .reveal { opacity: 1; transform: none; transition: none; }
+      }
+    </style>
   </head>
   <body>
     <header class="site-header" id="home">
@@ -19,7 +26,7 @@
       </nav>
     </header>
     <main>
-      <section class="hero" aria-labelledby="hero-title">
+      <section class="hero reveal" aria-labelledby="hero-title">
         <div class="hero__inner">
           <div class="hero__content">
             <p class="eyebrow">AI-Powered Operations Management</p>
@@ -48,7 +55,7 @@
         </div>
       </section>
 
-      <section id="problems" class="section section--statement" aria-labelledby="problems-title">
+      <section id="problems" class="section section--statement reveal" aria-labelledby="problems-title">
         <div class="section__inner">
           <p class="eyebrow">Business Gap</p>
           <h2 id="problems-title">企业 AI 落地的关键断层</h2>
@@ -70,7 +77,7 @@
         </div>
       </section>
 
-      <section id="solutions" class="section" aria-labelledby="solutions-title">
+      <section id="solutions" class="section reveal" aria-labelledby="solutions-title">
         <div class="section__inner">
           <p class="eyebrow">Implementation Services</p>
           <h2 id="solutions-title">可落地的支持方向</h2>
@@ -99,7 +106,7 @@
         </div>
       </section>
 
-      <section id="case-study" class="section section--case" aria-labelledby="case-title">
+      <section id="case-study" class="section section--case reveal" aria-labelledby="case-title">
         <div class="section__inner">
           <div class="section-heading">
             <p class="eyebrow">Applied Demo</p>
@@ -120,7 +127,7 @@
         <img src="assets/aoms-dashboard-clean.png" alt="">
       </dialog>
 
-      <section id="capabilities" class="section" aria-labelledby="capabilities-title">
+      <section id="capabilities" class="section reveal" aria-labelledby="capabilities-title">
         <div class="section__inner">
           <p class="eyebrow">Capability Matrix</p>
           <h2 id="capabilities-title">能力矩阵</h2>
@@ -141,7 +148,7 @@
         </div>
       </section>
 
-      <section id="work" class="section" aria-labelledby="work-title">
+      <section id="work" class="section reveal" aria-labelledby="work-title">
         <div class="section__inner">
           <p class="eyebrow">iOS App Store</p>
           <h2 id="work-title">独立开发作品</h2>
@@ -175,7 +182,7 @@
         </div>
       </section>
 
-      <section id="profile" class="section" aria-labelledby="profile-title">
+      <section id="profile" class="section reveal" aria-labelledby="profile-title">
         <div class="section__inner">
           <p class="eyebrow">Profile</p>
           <h2 id="profile-title">沈风华</h2>
@@ -191,12 +198,12 @@
         </div>
       </section>
 
-      <section id="contact" class="section section--contact" aria-labelledby="contact-title">
+      <section id="contact" class="section section--contact reveal" aria-labelledby="contact-title">
         <div class="section__inner">
           <p class="eyebrow">Start A Conversation</p>
           <h2 id="contact-title">联系交流</h2>
           <p>欢迎就企业 AI 落地诊断、运营管理智能化和相关实践交流。</p>
-          <div class="contact-grid">
+          <div class="contact-grid contact-methods" aria-label="联系方式">
             <article class="contact-card contact-card--wechat">
               <h3>微信</h3>
               <div class="wechat-qr-placeholder" aria-label="微信二维码待替换">微信二维码待替换</div>
@@ -206,6 +213,7 @@
               <h3>邮箱</h3>
               <p><a href="mailto:fenghua.shen@163.com">fenghua.shen@163.com</a></p>
               <p>适合发送业务背景、需求说明或交流邀请。</p>
+              <button class="copy-button" type="button" data-copy-value="fenghua.shen@163.com">复制邮箱</button>
             </article>
           </div>
         </div>

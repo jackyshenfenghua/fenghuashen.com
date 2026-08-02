@@ -8,6 +8,7 @@ for (const path of ['index.html', 'styles.css', 'script.js']) {
 }
 
 const html = read('index.html');
+const js = read('script.js');
 
 assert.match(html, /<html lang="zh-CN">/, 'document language must be zh-CN');
 assert.match(html, /<meta name="viewport" content="width=device-width, initial-scale=1\.0">/, 'mobile viewport meta is required');
@@ -51,6 +52,17 @@ assert.equal(existsSync('assets/aoms-dashboard-clean.png'), true, 'clean AOMS sc
 assert.ok(statSync('assets/aoms-dashboard-clean.png').size > 100_000, 'clean AOMS screenshot should be a real image asset');
 assert.match(html, /assets\/aoms-dashboard-clean\.png/, 'homepage must reference the clean AOMS screenshot');
 assert.doesNotMatch(html, /codex-clipboard-9b0e1df4-2615-4223-b827-aefb33352005\.png/, 'homepage must not reference the temporary upload path');
+
+for (const marker of ['initSmoothScroll', 'initActiveNavigation', 'initRevealOnScroll', 'initImageDialog', 'initCopyButtons']) {
+  assert.match(js, new RegExp(marker), `missing JavaScript initializer ${marker}`);
+}
+
+assert.match(html, /data-dialog-target="aoms-dialog"/, 'case image must open the AOMS dialog');
+assert.match(html, /data-dialog-close/, 'image dialog must have a close control');
+assert.match(html, /aria-label="主导航"/, 'main navigation needs an accessible label');
+assert.match(html, /data-copy-value=/, 'contact section should expose copyable contact text');
+assert.match(html, /data-copy-value="fenghua\.shen@163\.com"/, 'email should be the copyable contact value');
+assert.equal([...html.matchAll(/data-copy-value=/g)].length, 1, 'only email should expose a copy value');
 
 for (const asset of [
   'assets/profile-photo.jpg',
