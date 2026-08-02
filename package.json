@@ -1,0 +1,9 @@
+{
+  "name": "personal-ai-operations-website",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "test": "node tests/static-check.mjs",
+    "serve": "python3 -m http.server 4173"
+  }
+}
