@@ -4,7 +4,8 @@ const initSmoothScroll = () => {
       const target = document.querySelector(link.getAttribute('href'));
       if (!target) return;
       event.preventDefault();
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      target.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' });
     });
   });
 };
@@ -71,11 +72,17 @@ const initCopyButtons = () => {
     button.dataset.copyLabel = button.textContent;
     button.addEventListener('click', async () => {
       const value = button.getAttribute('data-copy-value');
-      if (!value || !navigator.clipboard) return;
-      await navigator.clipboard.writeText(value);
-      button.textContent = '已复制';
+      const originalLabel = button.dataset.copyLabel || '复制';
+      if (!value) return;
+      try {
+        if (!navigator.clipboard) throw new Error('Clipboard API unavailable');
+        await navigator.clipboard.writeText(value);
+        button.textContent = '已复制';
+      } catch {
+        button.textContent = '复制失败';
+      }
       window.setTimeout(() => {
-        button.textContent = button.dataset.copyLabel || '复制';
+        button.textContent = originalLabel;
       }, 1600);
     });
   });
