@@ -89,6 +89,8 @@ for (const token of ['--ink', '--surface', '--accent-blue', '--accent-teal', '--
 }
 
 assert.match(css, /@media\s*\(max-width:\s*760px\)/, 'mobile breakpoint is required');
+assert.match(css, /@media\s*\(prefers-reduced-motion:\s*reduce\)[\s\S]*?html\s*\{\s*scroll-behavior:\s*auto;/, 'reduced-motion media query must disable smooth html scrolling');
+assert.match(css, /\.site-nav\s+a\[aria-current\]/, 'current navigation links need a visible CSS state');
 assert.doesNotMatch(css, /letter-spacing\s*:\s*-\d/, 'negative letter spacing is not allowed');
 assert.doesNotMatch(css, /font-size\s*:\s*[^;]*vw/, 'viewport-width font sizing is not allowed');
 assert.doesNotMatch(css, /border-radius\s*:\s*(?:9|[1-9]\d)px/, 'pixel border radii above 8px are not allowed');
