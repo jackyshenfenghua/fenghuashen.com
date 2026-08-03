@@ -66,6 +66,8 @@ assert.equal([...html.matchAll(/data-copy-value=/g)].length, 1, 'only email shou
 
 assert.match(html, /<main>/, 'page must have a main landmark');
 assert.match(html, /<h1[^>]*>运营管理智能自动化<\/h1>/, 'homepage must have one clear h1');
+assert.match(html, /<section id="home" class="hero reveal"/, 'home anchor must target the hero section, not the sticky header');
+assert.doesNotMatch(html, /<header[^>]*id="home"/, 'sticky header must not own the home anchor');
 assert.match(html, /alt="[^"]{12,}"/, 'meaningful image alt text is required');
 assert.doesNotMatch(html, /<form\b/i, 'static first version must not include forms');
 assert.doesNotMatch(html, /\b(login|database|booking|pricing)\b/i, 'excluded product surface should not appear in first version HTML');
@@ -91,6 +93,8 @@ for (const token of ['--ink', '--surface', '--accent-blue', '--accent-teal', '--
 assert.match(css, /@media\s*\(max-width:\s*760px\)/, 'mobile breakpoint is required');
 assert.match(css, /@media\s*\(prefers-reduced-motion:\s*reduce\)[\s\S]*?html\s*\{\s*scroll-behavior:\s*auto;/, 'reduced-motion media query must disable smooth html scrolling');
 assert.match(css, /\.site-nav\s+a\[aria-current\]/, 'current navigation links need a visible CSS state');
+assert.match(css, /\.hero-proof img\s*\{[^}]*object-fit:\s*contain;[^}]*object-position:\s*center top;/, 'hero portrait must preserve the top of the head');
+assert.match(js, /href\s*===\s*['"]#home['"][\s\S]*?window\.scrollTo\(\{\s*top:\s*0,/, 'home navigation must scroll to the document top');
 assert.doesNotMatch(css, /letter-spacing\s*:\s*-\d/, 'negative letter spacing is not allowed');
 assert.doesNotMatch(css, /font-size\s*:\s*[^;]*vw/, 'viewport-width font sizing is not allowed');
 assert.doesNotMatch(css, /border-radius\s*:\s*(?:9|[1-9]\d)px/, 'pixel border radii above 8px are not allowed');

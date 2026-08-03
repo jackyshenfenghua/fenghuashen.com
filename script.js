@@ -1,11 +1,20 @@
 const initSmoothScroll = () => {
   document.querySelectorAll('a[href^="#"]').forEach((link) => {
     link.addEventListener('click', (event) => {
-      const target = document.querySelector(link.getAttribute('href'));
+      const href = link.getAttribute('href');
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const behavior = prefersReducedMotion ? 'auto' : 'smooth';
+
+      if (href === '#home') {
+        event.preventDefault();
+        window.scrollTo({ top: 0, behavior });
+        return;
+      }
+
+      const target = document.querySelector(href);
       if (!target) return;
       event.preventDefault();
-      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      target.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' });
+      target.scrollIntoView({ behavior, block: 'start' });
     });
   });
 };
