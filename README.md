@@ -1,15 +1,27 @@
-# Personal AI Operations Website
+# 运营管理智能自动化个人网站
 
-## Validate
+静态个人主页，面向企业老板、高管、潜在客户和合作伙伴，展示业务理解、工程管理、运营管理和 AI 落地实践。
 
-```bash
-npm test
-```
+## 本地查看
 
-## Preview locally
+直接打开 `index.html`，或运行：
 
 ```bash
 npm run serve
 ```
 
-Then open <http://localhost:4173>.
+然后访问 `http://localhost:4173`。
+
+## 验证
+
+```bash
+npm test
+```
+
+## 内容更新
+
+- 首页内容在 `index.html` 中维护。
+- 样式在 `styles.css` 中维护。
+- 轻量交互在 `script.js` 中维护。
+- 案例截图、头像和二维码放在 `assets/`。
+- 当前版本使用仓库中的真实头像、案例截图和 App 素材；微信二维码保留为第一版占位内容，发布前再替换。

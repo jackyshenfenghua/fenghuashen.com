@@ -64,6 +64,12 @@ assert.match(html, /data-copy-value=/, 'contact section should expose copyable c
 assert.match(html, /data-copy-value="fenghua\.shen@163\.com"/, 'email should be the copyable contact value');
 assert.equal([...html.matchAll(/data-copy-value=/g)].length, 1, 'only email should expose a copy value');
 
+assert.match(html, /<main>/, 'page must have a main landmark');
+assert.match(html, /<h1[^>]*>运营管理智能自动化<\/h1>/, 'homepage must have one clear h1');
+assert.match(html, /alt="[^"]{12,}"/, 'meaningful image alt text is required');
+assert.doesNotMatch(html, /<form\b/i, 'static first version must not include forms');
+assert.doesNotMatch(html, /\b(login|database|booking|pricing)\b/i, 'excluded product surface should not appear in first version HTML');
+
 for (const asset of [
   'assets/profile-photo.jpg',
   'assets/app-paw-diary.png',
