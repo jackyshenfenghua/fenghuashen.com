@@ -81,14 +81,14 @@ const initCopyButtons = () => {
     button.dataset.copyLabel = button.textContent;
     button.addEventListener('click', async () => {
       const value = button.getAttribute('data-copy-value');
-      const originalLabel = button.dataset.copyLabel || '复制';
+      const originalLabel = button.dataset.copyLabel || 'Copy';
       if (!value) return;
       try {
         if (!navigator.clipboard) throw new Error('Clipboard API unavailable');
         await navigator.clipboard.writeText(value);
-        button.textContent = '已复制';
+        button.textContent = 'Copied';
       } catch {
-        button.textContent = '复制失败';
+        button.textContent = 'Copy failed';
       }
       window.setTimeout(() => {
         button.textContent = originalLabel;

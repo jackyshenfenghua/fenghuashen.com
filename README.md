@@ -1,27 +1,28 @@
-# 运营管理智能自动化个人网站
+# Jacky Shen International Portfolio Website
 
-静态个人主页，面向企业老板、高管、潜在客户和合作伙伴，展示业务理解、工程管理、运营管理和 AI 落地实践。
+A fully static personal portfolio website for Jacky Shen, focused on project management, operations, project controls, and Applied AI exploration.
 
-## 本地查看
+## Local Preview
 
-直接打开 `index.html`，或运行：
+Open `index.html` directly, or run:
 
 ```bash
 npm run serve
 ```
 
-然后访问 `http://localhost:4173`。
+Then visit `http://localhost:4173`.
 
-## 验证
+## Verification
 
 ```bash
 npm test
 ```
 
-## 内容更新
+## Content
 
-- 首页内容在 `index.html` 中维护。
-- 样式在 `styles.css` 中维护。
-- 轻量交互在 `script.js` 中维护。
-- 案例截图、头像和二维码放在 `assets/`。
-- 当前版本使用仓库中的真实头像、案例截图和 App 素材；微信二维码保留为第一版占位内容，发布前再替换。
+- Page content is maintained in `index.html`.
+- Global styling is maintained in `styles.css`.
+- Lightweight interactions are maintained in `script.js`.
+- Production images are stored in `assets/`.
+- The AOMS dashboard image is a representative demo interface using synthetic data.
+- Public contact details intentionally include email and LinkedIn.

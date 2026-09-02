@@ -1,4 +1,24 @@
-.worktrees/
-.superpowers/
+/.worktrees/
+/.superpowers/
 node_modules/
 .DS_Store
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Build / cache / test artifacts
+dist/
+build/
+coverage/
+.cache/
+
+# Internal project/review material
+docs/website-review/
+docs/website-review-package.md
+docs/superpowers/
+
+# Superseded local product artwork variants
+assets/app-paw-diary.png
+assets/app-zen-flow.png
