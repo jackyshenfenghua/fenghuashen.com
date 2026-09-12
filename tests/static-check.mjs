@@ -5,7 +5,7 @@ const read = (path) => readFileSync(path, 'utf8');
 const escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const textExists = (html, text) => new RegExp(escapeRegExp(text)).test(html);
 
-for (const path of ['index.html', 'styles.css', 'script.js']) {
+for (const path of ['index.html', 'styles.css', 'script.js', 'robots.txt']) {
   assert.equal(existsSync(path), true, `${path} must exist`);
 }
 
@@ -15,17 +15,24 @@ const js = read('script.js');
 
 assert.match(html, /<html lang="en">/, 'document language must be English');
 assert.match(html, /<meta name="viewport" content="width=device-width, initial-scale=1\.0">/, 'mobile viewport meta is required');
-assert.match(html, /<title>Jacky Shen \| Project Management, Operations &amp; AI<\/title>/, 'English SEO title is required and must escape ampersands');
-assert.match(html, /<meta name="description" content="Jacky Shen is a PMP-certified project and operations professional with 20\+ years of experience in project management and project controls, with hands-on exploration of AI, automation and digital products\.">/, 'English meta description is required');
-assert.match(html, /property="og:title"/, 'Open Graph title is required');
-assert.match(html, /property="og:description"/, 'Open Graph description is required');
+assert.match(html, /<title>Jacky Shen \| Project Management, Operations &amp; Applied AI<\/title>/, 'English SEO title is required and must escape ampersands');
+assert.match(html, /<meta name="description" content="PMP®-credentialed project and operations professional with 20\+ years of experience in project management and project controls, extending into Applied AI and automation\.">/, 'English meta description must emphasize professional foundation before Applied AI');
+assert.equal([...html.matchAll(/<link rel="canonical" href="https:\/\/fenghuashen\.com\/">/g)].length, 1, 'exactly one HTTPS canonical link is required');
+assert.match(html, /<meta property="og:title" content="Jacky Shen \| Project Management, Operations &amp; Applied AI">/, 'Open Graph title must align with page title');
+assert.match(html, /<meta property="og:description" content="PMP®-credentialed project and operations professional with 20\+ years of experience in project management and project controls, extending into Applied AI and automation\.">/, 'Open Graph description must preserve the positioning hierarchy');
+assert.match(html, /<meta property="og:url" content="https:\/\/fenghuashen\.com\/">/, 'Open Graph URL must use the canonical HTTPS homepage');
 assert.match(html, /property="og:type" content="profile"/, 'Open Graph profile type is required');
 assert.match(html, /name="twitter:card" content="summary"/, 'Twitter card metadata is required');
+assert.match(html, /<meta name="twitter:title" content="Jacky Shen \| Project Management, Operations &amp; Applied AI">/, 'Twitter title must align with page title');
+assert.match(html, /<meta name="twitter:description" content="PMP®-credentialed project and operations professional with 20\+ years of experience in project management and project controls, extending into Applied AI and automation\.">/, 'Twitter description must preserve the positioning hierarchy');
 assert.match(html, /rel="icon" href="favicon\.svg" type="image\/svg\+xml"/, 'favicon link is required');
 assert.equal([...html.matchAll(/&(?![a-zA-Z][a-zA-Z0-9]+;|#[0-9]+;|#x[0-9A-Fa-f]+;)/g)].length, 0, 'HTML source must not contain unescaped ampersands');
-assert.doesNotMatch(html, /rel="canonical"|example\.com|localhost|127\.0\.0\.1/, 'fake canonical or placeholder domains must not appear');
+assert.doesNotMatch(html, /example\.com|localhost|127\.0\.0\.1|http:\/\/fenghuashen\.com|https?:\/\/www\.fenghuashen\.com|jackyshenfenghua\.github\.io|netlify\.app/, 'fake, non-canonical, preview, or old hosting SEO URLs must not appear');
+assert.doesNotMatch(html, /noindex|nofollow|X-Robots-Tag/i, 'indexing blockers must not appear in the homepage source');
 assert.match(html, /<script type="application\/ld\+json">[\s\S]*"@type": "Person"[\s\S]*"name": "Jacky Shen"/, 'Person structured data is required');
 const structuredData = JSON.parse(html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
+assert.equal(structuredData.url, 'https://fenghuashen.com/', 'Person structured data should include the canonical HTTPS identity URL');
+assert.equal(structuredData.description, 'PMP®-credentialed project and operations professional with 20+ years of experience in project management and project controls, extending into Applied AI and automation.', 'Person structured data description must align with the V1.3 positioning hierarchy');
 assert.deepEqual(structuredData.sameAs, ['https://www.linkedin.com/in/jacky-shen-pmp-b17bb22b'], 'LinkedIn sameAs is required');
 assert.doesNotMatch(html, /"employer"|"address"|"identifier"|"alumniOf"/, 'structured data must not include unconfirmed facts');
 
@@ -241,11 +248,29 @@ assert.doesNotMatch(css, /letter-spacing\s*:\s*-\d/, 'negative letter spacing is
 assert.doesNotMatch(css, /font-size\s*:\s*[^;]*vw/, 'viewport-width font sizing is not allowed');
 assert.doesNotMatch(css, /border-radius\s*:\s*(?:9|[1-9]\d)px/, 'pixel border radii above 8px are not allowed');
 
-assert.equal(existsSync('robots.txt'), true, 'robots.txt is required');
 const robots = read('robots.txt');
 assert.match(robots, /User-agent:\s*\*/, 'robots.txt must define user-agent');
 assert.match(robots, /Allow:\s*\//, 'robots.txt must allow the static site');
-assert.doesNotMatch(robots, /Sitemap:\s*https?:\/\//, 'robots.txt must not invent a sitemap URL');
-assert.equal(existsSync('sitemap.xml'), false, 'sitemap.xml should wait for a real production domain');
+assert.match(robots, /Sitemap:\s*https:\/\/fenghuashen\.com\/sitemap\.xml/, 'robots.txt must declare the canonical sitemap URL');
+assert.doesNotMatch(robots, /Disallow:\s*\//, 'robots.txt must not block public content');
+
+assert.equal(existsSync('sitemap.xml'), true, 'sitemap.xml is required now that the production domain is live');
+const sitemap = read('sitemap.xml');
+assert.equal(
+  sitemap.trim(),
+  `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://fenghuashen.com/</loc>
+  </url>
+</urlset>`,
+  'sitemap.xml must be a minimal canonical homepage sitemap'
+);
+const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
+assert.deepEqual(sitemapUrls, ['https://fenghuashen.com/'], 'sitemap must include only the canonical homepage URL');
+for (const url of sitemapUrls) {
+  assert.doesNotMatch(url, /#|http:\/\/|https?:\/\/www\.fenghuashen\.com|github\.io|netlify\.app/i, 'sitemap URLs must not include fragments or non-canonical hosts');
+}
+assert.doesNotMatch(sitemap, /changefreq|priority|lastmod/i, 'sitemap must not include arbitrary metadata');
 
 console.log('International portfolio static checks passed.');

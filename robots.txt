@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://fenghuashen.com/sitemap.xml
