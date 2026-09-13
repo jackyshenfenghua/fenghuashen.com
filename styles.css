@@ -137,6 +137,30 @@ article p { margin: 12px 0 0; font-size: 15px; }
 .footer__inner { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
 .footer__inner p { margin: 0; color: var(--muted); font-size: 14px; }
 
+.app-page { min-height: 100vh; background: linear-gradient(120deg, rgba(15, 23, 38, 0.05), rgba(15, 156, 168, 0.05)), var(--surface-soft); }
+.app-page__shell { width: min(860px, calc(100% - 48px)); margin: 0 auto; }
+.app-page__header { border-bottom: 1px solid var(--line); background: rgba(255, 255, 255, 0.93); backdrop-filter: blur(16px); }
+.app-page__header .app-page__shell { min-height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+.app-page__brand, .app-page__context, .app-page__footer p { margin: 0; }
+.app-page__brand { color: var(--ink); font-size: 16px; font-weight: 850; }
+.app-page__context { color: var(--accent-teal); font-size: 13px; font-weight: 800; }
+.app-page__main { width: min(860px, calc(100% - 48px)); margin: 0 auto; padding: 56px 0; }
+.app-page__content { padding: 42px; border-top: 3px solid var(--accent-teal); box-shadow: var(--shadow); }
+.app-page__kicker { margin: 0 0 10px; color: var(--accent-teal); font-size: 12px; font-weight: 850; text-transform: uppercase; }
+.app-page__updated { margin-top: 10px; color: var(--muted); font-size: 15px; font-weight: 750; }
+.app-page__content h1, .app-page__content h2, .app-page__content h3 { color: var(--ink); letter-spacing: 0; }
+.app-page__content h1 { margin: 0; font-size: 42px; line-height: 1.08; }
+.app-page__content h2 { margin: 38px 0 12px; padding-top: 24px; border-top: 1px solid var(--line); font-size: 25px; line-height: 1.25; }
+.app-page__content h3 { margin: 28px 0 10px; font-size: 18px; line-height: 1.35; }
+.app-page__content p, .app-page__content li { color: var(--muted); font-size: 16px; }
+.app-page__content p { margin: 12px 0 0; }
+.app-page__content ul { margin: 12px 0 0; padding-left: 22px; }
+.app-page__content li + li { margin-top: 5px; }
+.app-page__content a { color: var(--accent-blue); font-weight: 800; overflow-wrap: anywhere; text-underline-offset: 3px; }
+.app-page__content a:hover { color: var(--accent-teal); }
+.app-page__footer { padding: 0 0 34px; }
+.app-page__footer p { color: var(--muted); font-size: 14px; }
+
 @media (max-width: 1024px) {
   .site-nav { gap: 16px; }
   .site-nav__brand span { display: none; }
@@ -168,4 +192,10 @@ article p { margin: 12px 0 0; font-size: 15px; }
   .profile-photo { width: min(280px, 100%); }
   .image-dialog { padding: 12px; }
   .footer__inner { align-items: flex-start; flex-direction: column; }
+  .app-page__shell, .app-page__main { width: min(100% - 36px, 860px); }
+  .app-page__header .app-page__shell { align-items: flex-start; flex-direction: column; justify-content: center; gap: 2px; padding: 10px 0; }
+  .app-page__main { padding: 34px 0; }
+  .app-page__content { padding: 26px; }
+  .app-page__content h1 { font-size: 32px; }
+  .app-page__content h2 { font-size: 22px; }
 }

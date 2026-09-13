@@ -12,6 +12,8 @@ for (const path of ['index.html', 'styles.css', 'script.js', 'robots.txt']) {
 const html = read('index.html');
 const css = read('styles.css');
 const js = read('script.js');
+const privacyPath = 'can-your-pet/privacy/index.html';
+const supportPath = 'can-your-pet/support/index.html';
 
 assert.match(html, /<html lang="en">/, 'document language must be English');
 assert.match(html, /<meta name="viewport" content="width=device-width, initial-scale=1\.0">/, 'mobile viewport meta is required');
@@ -28,6 +30,7 @@ assert.match(html, /<meta name="twitter:description" content="PMP®-credentialed
 assert.match(html, /rel="icon" href="favicon\.svg" type="image\/svg\+xml"/, 'favicon link is required');
 assert.equal([...html.matchAll(/&(?![a-zA-Z][a-zA-Z0-9]+;|#[0-9]+;|#x[0-9A-Fa-f]+;)/g)].length, 0, 'HTML source must not contain unescaped ampersands');
 assert.doesNotMatch(html, /example\.com|localhost|127\.0\.0\.1|http:\/\/fenghuashen\.com|https?:\/\/www\.fenghuashen\.com|jackyshenfenghua\.github\.io|netlify\.app/, 'fake, non-canonical, preview, or old hosting SEO URLs must not appear');
+assert.equal(textExists(html, 'Can Your Pet'), false, 'homepage must not mention Can Your Pet');
 assert.doesNotMatch(html, /noindex|nofollow|X-Robots-Tag/i, 'indexing blockers must not appear in the homepage source');
 assert.match(html, /<script type="application\/ld\+json">[\s\S]*"@type": "Person"[\s\S]*"name": "Jacky Shen"/, 'Person structured data is required');
 const structuredData = JSON.parse(html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
@@ -272,5 +275,105 @@ for (const url of sitemapUrls) {
   assert.doesNotMatch(url, /#|http:\/\/|https?:\/\/www\.fenghuashen\.com|github\.io|netlify\.app/i, 'sitemap URLs must not include fragments or non-canonical hosts');
 }
 assert.doesNotMatch(sitemap, /changefreq|priority|lastmod/i, 'sitemap must not include arbitrary metadata');
+
+assert.equal(read('CNAME').trim(), 'fenghuashen.com', 'custom domain CNAME must remain unchanged');
+for (const appPagePath of [privacyPath, supportPath]) {
+  assert.equal(existsSync(appPagePath), true, `${appPagePath} must exist for direct GitHub Pages routing`);
+}
+
+const privacyHtml = read(privacyPath);
+const supportHtml = read(supportPath);
+const appPages = `${privacyHtml}\n${supportHtml}`;
+
+assert.match(privacyHtml, /<html lang="en">/, 'Can Your Pet privacy page language must be English');
+assert.match(supportHtml, /<html lang="en">/, 'Can Your Pet support page language must be English');
+assert.match(privacyHtml, /<title>Can Your Pet — Privacy Policy<\/title>/, 'privacy page title is required');
+assert.match(supportHtml, /<title>Can Your Pet — Support<\/title>/, 'support page title is required');
+assert.match(privacyHtml, /<meta name="description" content="Privacy information for the Can Your Pet mobile app\.">/, 'privacy page meta description is required');
+assert.match(supportHtml, /<meta name="description" content="Support and contact information for the Can Your Pet mobile app\.">/, 'support page meta description is required');
+assert.match(privacyHtml, /<link rel="canonical" href="https:\/\/fenghuashen\.com\/can-your-pet\/privacy\/">/, 'privacy page canonical URL is required');
+assert.match(supportHtml, /<link rel="canonical" href="https:\/\/fenghuashen\.com\/can-your-pet\/support\/">/, 'support page canonical URL is required');
+assert.match(privacyHtml, /<link rel="stylesheet" href="..\/..\/styles\.css">/, 'privacy page must reuse the existing stylesheet');
+assert.match(supportHtml, /<link rel="stylesheet" href="..\/..\/styles\.css">/, 'support page must reuse the existing stylesheet');
+
+for (const appPageHtml of [privacyHtml, supportHtml]) {
+  assert.match(appPageHtml, /<a class="skip-link" href="#main">Skip to content<\/a>/, 'standalone app pages need a skip link');
+  assert.match(appPageHtml, /<main id="main"/, 'standalone app pages need a main landmark target');
+  assert.equal([...appPageHtml.matchAll(/&(?![a-zA-Z][a-zA-Z0-9]+;|#[0-9]+;|#x[0-9A-Fa-f]+;)/g)].length, 0, 'standalone app pages must not contain unescaped ampersands');
+  assert.doesNotMatch(appPageHtml, /href="(?:\/|..\/..\/index\.html|https:\/\/fenghuashen\.com\/")/, 'standalone app pages must not link back to the personal homepage');
+}
+
+for (const requiredPrivacyText of [
+  'Privacy Policy',
+  'Last updated: September 2026',
+  'Can Your Pet is a pet behavior discovery app that lets you compare your pet’s everyday behaviors with other participating pets.',
+  'This Privacy Policy explains what information the app collects, how it is used, and what is not collected.',
+  'Information We Collect',
+  'Pet information',
+  'Pet species, currently Dog or Cat',
+  'An optional pet name',
+  'Your answers to pet behavior challenges',
+  'App usage information',
+  'Pet names are not included in usage analytics.',
+  'Anonymous account identifier',
+  'How We Use Information',
+  'Information We Do Not Collect',
+  'The current version also does not include user-generated public posts, comments, direct messages, or public social profiles.',
+  'Sharing',
+  'Participant Statistics',
+  'Data Security',
+  'Data Retention and Deletion',
+  'https://fenghuashen.com/can-your-pet/support/',
+  'Children',
+  'Changes to This Policy',
+  'Contact',
+  '© 2026 Can Your Pet'
+]) {
+  assert.match(privacyHtml, new RegExp(escapeRegExp(requiredPrivacyText)), `missing required privacy page copy: ${requiredPrivacyText}`);
+}
+
+for (const requiredSupportText of [
+  'Can Your Pet Support',
+  'Thanks for using Can Your Pet.',
+  'Can Your Pet is a pet behavior discovery app that helps you explore the funny, unusual, sweet, and relatable things your dog or cat does.',
+  'Need Help?',
+  'your device model',
+  'your iOS version',
+  'the Can Your Pet app version',
+  'a short description of what happened',
+  'Do not include passwords or sensitive personal information.',
+  'Common Questions',
+  'Do I need an account?',
+  'Why don’t I see a percentage for every challenge?',
+  'Can Your Pet does not invent or display fake participation numbers.',
+  'Is Can Your Pet giving veterinary or medical advice?',
+  'No.',
+  'If you have concerns about your pet’s health or wellbeing, contact a qualified veterinarian.',
+  'Why is media sometimes unavailable?',
+  'How can I request deletion of my data?',
+  'Privacy',
+  'https://fenghuashen.com/can-your-pet/privacy/',
+  'Contact',
+  'fenghua.shen@163.com',
+  '© 2026 Can Your Pet'
+]) {
+  assert.match(supportHtml, new RegExp(escapeRegExp(requiredSupportText)), `missing required support page copy: ${requiredSupportText}`);
+}
+
+assert.match(supportHtml, /mailto:fenghua\.shen@163\.com/, 'support page must reuse the existing public email address');
+for (const forbiddenAppPageText of [
+  'Supabase',
+  'milestone',
+  'engineering architecture',
+  'anonymous Auth UID',
+  'Auth UID',
+  'internal validation metrics',
+  'GitHub',
+  'Codex',
+  'TestFlight blocker',
+  'database'
+]) {
+  assert.equal(textExists(appPages, forbiddenAppPageText), false, `standalone app pages must not expose internal implementation details: ${forbiddenAppPageText}`);
+}
 
 console.log('International portfolio static checks passed.');
