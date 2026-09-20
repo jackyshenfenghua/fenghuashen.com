@@ -318,6 +318,9 @@ for (const requiredPrivacyText of [
   'Anonymous account identifier',
   'How We Use Information',
   'Information We Do Not Collect',
+  'Photos',
+  'Can Your Pet does not read or browse your photo library and does not access your existing photos.',
+  'This add-only permission is used only to save the share card you selected and does not allow Can Your Pet to access your existing photos.',
   'The current version also does not include user-generated public posts, comments, direct messages, or public social profiles.',
   'Sharing',
   'Participant Statistics',
@@ -331,6 +334,8 @@ for (const requiredPrivacyText of [
 ]) {
   assert.match(privacyHtml, new RegExp(escapeRegExp(requiredPrivacyText)), `missing required privacy page copy: ${requiredPrivacyText}`);
 }
+
+assert.doesNotMatch(privacyHtml, /<li>photo library access<\/li>/, 'privacy page must not broadly claim that photo-library access is never requested');
 
 for (const requiredSupportText of [
   'Can Your Pet Support',
