@@ -312,18 +312,15 @@ for (const requiredPrivacyText of [
   'Pet information',
   'Pet species, currently Dog or Cat',
   'An optional pet name',
-  'Your answers to pet behavior challenges',
   'App usage information',
   'Pet names are not included in usage analytics.',
   'Anonymous account identifier',
   'How We Use Information',
   'Information We Do Not Collect',
   'Photos',
-  'Can Your Pet does not read or browse your photo library and does not access your existing photos.',
-  'This add-only permission is used only to save the share card you selected and does not allow Can Your Pet to access your existing photos.',
   'The current version also does not include user-generated public posts, comments, direct messages, or public social profiles.',
   'Sharing',
-  'Participant Statistics',
+  'Community Statistics',
   'Data Security',
   'Data Retention and Deletion',
   'https://fenghuashen.com/can-your-pet/support/',
@@ -336,6 +333,35 @@ for (const requiredPrivacyText of [
 }
 
 assert.doesNotMatch(privacyHtml, /<li>photo library access<\/li>/, 'privacy page must not broadly claim that photo-library access is never requested');
+
+for (const [pattern, message] of [
+  [/<h2>Suggest a Quirk<\/h2>/, 'privacy page must disclose Suggest a Quirk'],
+  [/voluntarily submit free-text describing a pet behavior/, 'privacy page must describe voluntary free-text quirk submissions'],
+  [/suggestion is private/, 'privacy page must state that quirk suggestions are private'],
+  [/not automatically made public/, 'privacy page must state that suggestions are not automatically public'],
+  [/not automatically[^<]*published as a Challenge/, 'privacy page must state that suggestions are not automatically published as Challenges'],
+  [/not automatically[^<]*shown to other users/, 'privacy page must state that suggestions are not automatically shown to other users'],
+  [/editorial purposes[^<]*duplicate or similar behaviors[^<]*future challenge design/, 'privacy page must explain the limited Suggest a Quirk review purposes'],
+  [/<h2>Deleting a Pet<\/h2>/, 'privacy page must explain Delete Pet behavior'],
+  [/permanently removes the pet profile and pet-linked data/, 'privacy page must state that Delete Pet removes pet-linked data'],
+  [/identifiable Style Check progress and responses/, 'privacy page must include identifiable Style Check data in Delete Pet'],
+  [/private Suggest a Quirk submissions/, 'privacy page must include private suggestions in Delete Pet'],
+  [/stored app progress and related pet-specific state/, 'privacy page must include pet-specific app state in Delete Pet'],
+  [/aggregate community insights based on behavior responses/, 'privacy page must describe response-based community statistics'],
+  [/individual challenge-level YES\s*\/\s*NOPE behavior contributions in de-identified form/, 'privacy page must disclose de-identified YES/NOPE retention'],
+  [/do not contain an account or owner ID/, 'privacy page must exclude account linkage from retained statistical records'],
+  [/stable identifier linking multiple responses to the deleted pet/, 'privacy page must exclude stable pet-response linkage from retained statistical records'],
+  [/not linked to your account or deleted pet in the application data model/, 'privacy page must describe the application-data-model separation'],
+  [/do not retain the deleted pet’s Style Check profile or Behavior Style result/, 'privacy page must exclude deleted Behavior Style retention'],
+  [/cannot later identify which records came from that pet for selective removal/, 'privacy page must disclose the selective-removal limitation'],
+  [/Deleting a pet does not delete other account-level data\./, 'privacy page must state the account-level deletion boundary'],
+  [/does not read or browse your photo library/, 'privacy page must preserve the photo-library read/browse limitation'],
+  [/add-only permission/, 'privacy page must preserve the Photos add-only disclosure'],
+  [/does not allow Can Your Pet to access your existing photos/, 'privacy page must preserve the existing-photo access limitation'],
+  [/https:\/\/fenghuashen\.com\/can-your-pet\/support\//, 'privacy page must preserve the Support contact path']
+]) {
+  assert.match(privacyHtml, pattern, message);
+}
 
 for (const requiredSupportText of [
   'Can Your Pet Support',
