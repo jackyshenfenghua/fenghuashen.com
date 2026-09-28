@@ -377,11 +377,18 @@ for (const [pattern, message] of [
   [/No pet-photo image, filename, thumbnail, photo hash, or photo metadata is retained/, 'privacy page must exclude photo artifacts from retained statistics'],
   [/Save Image[^<]*separate from selecting an existing pet photo through Apple’s system photo picker/, 'privacy page must distinguish Save Image from selecting a pet photo'],
   [/Save Image uses add-only Photos access/, 'privacy page must preserve the Share Card add-only disclosure'],
-  [/Current generated Share Cards do not include the pet photo/, 'privacy page must describe the current Share Card boundary'],
+  [/generated Share Card may include the pet photo stored locally on your device/, 'privacy page must disclose that a generated Share Card may include the local pet photo'],
+  [/Share Card is rendered locally on your device/, 'privacy page must disclose local Share Card rendering'],
+  [/only when you explicitly choose to create, share, or save it/, 'privacy page must require explicit action for Share Card creation, sharing, or saving'],
+  [/does not automatically upload either the source pet photo or the generated Share Card to Can Your Pet’s cloud service/, 'privacy page must exclude automatic source-photo and Share Card cloud upload'],
+  [/iOS presents the system share sheet[^<]*you choose the destination/, 'privacy page must explain the system share sheet and user-selected destination'],
+  [/Pet photos and Share Card factual content are not sent to analytics/, 'privacy page must preserve the Share Card analytics boundary'],
   [/https:\/\/fenghuashen\.com\/can-your-pet\/support\//, 'privacy page must preserve the Support contact path']
 ]) {
   assert.match(privacyHtml, pattern, message);
 }
+
+assert.doesNotMatch(privacyHtml, /Current generated Share Cards do not include the pet photo/, 'privacy page must remove the obsolete Share Card photo exclusion');
 
 for (const requiredSupportText of [
   'Can Your Pet Support',
