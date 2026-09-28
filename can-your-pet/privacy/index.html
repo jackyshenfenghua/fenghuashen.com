@@ -29,7 +29,7 @@
       <article class="app-page__content" aria-labelledby="privacy-title">
         <p class="app-page__kicker">Can Your Pet</p>
         <h1 id="privacy-title">Privacy Policy</h1>
-        <p class="app-page__updated">Last updated: September 2026</p>
+        <p class="app-page__updated">Last updated: September 28, 2026</p>
 
         <p>Can Your Pet is a pet behavior discovery app that lets you compare your pet’s everyday behaviors with other participating pets.</p>
         <p>This Privacy Policy explains what information the app collects, how it is used, and what is not collected.</p>
@@ -41,6 +41,7 @@
         <ul>
           <li>Pet species, currently Dog or Cat</li>
           <li>An optional pet name</li>
+          <li>An optional pet photo, stored locally on your device</li>
           <li>Your YES / NOPE answers to pet behavior challenges</li>
           <li>Your Style Check YES / NOPE answers and progress</li>
           <li>App progress and state needed to provide the experience</li>
@@ -86,7 +87,6 @@
           <li>precise location</li>
           <li>contacts</li>
           <li>health data</li>
-          <li>camera access</li>
           <li>microphone access</li>
           <li>advertising identifiers</li>
           <li>cross-app advertising tracking</li>
@@ -94,23 +94,31 @@
         <p>The current version also does not include user-generated public posts, comments, direct messages, or public social profiles.</p>
 
         <h2>Photos</h2>
-        <p>Can Your Pet does not read or browse your photo library and does not access your existing photos.</p>
-        <p>If you choose to save a generated share card using the iOS Save Image option, iOS may ask for permission to add that image to your photo library. This add-only permission is used only to save the share card you selected and does not allow Can Your Pet to access your existing photos.</p>
+        <p>Pet photos are optional.</p>
+        <p>If you choose an existing pet photo, Apple’s system photo picker lets you explicitly select an image. Can Your Pet receives only the image you select and does not browse your photo library or request broad photo-library read access.</p>
+        <p>If you choose Take Photo, Can Your Pet requests camera access only for the photo capture you initiate. The camera is not used continuously or in the background.</p>
+        <p>Before local storage, the selected or captured image is resized and re-encoded for use in the app. Can Your Pet does not intentionally retain the source image’s EXIF or GPS metadata in the locally stored pet-photo copy.</p>
+        <p>Pet photos are stored locally on your device. They are not uploaded to Can Your Pet’s cloud service or synchronized through the Can Your Pet backend.</p>
+        <p>Pet photos are used only for local pet identity and presentation. They are not used for Behavior Style calculations, behavior inference, community statistics, analytics, advertising, or AI analysis.</p>
+        <p>If you remove a pet photo, the locally stored photo is deleted while the pet profile and behavior data remain.</p>
 
         <h2>Sharing</h2>
         <p>Can Your Pet lets you generate and share a pet profile card using the standard sharing options provided by your device.</p>
-        <p>If you choose Save Image, iOS may request add-only permission to save that generated card to your photo library.</p>
+        <p>Save Image for a generated Share Card is separate from selecting an existing pet photo through Apple’s system photo picker. Save Image uses add-only Photos access to save the generated image and does not browse your photo library.</p>
+        <p>Current generated Share Cards do not include the pet photo.</p>
         <p>The app does not record the destination where you choose to share the card.</p>
 
         <h2>Community Statistics</h2>
         <p>Challenge results may show aggregate community insights based on behavior responses, such as how commonly a behavior is reported, community percentages, and rarity or commonness labels.</p>
         <p>When you delete a pet, we may retain individual challenge-level YES / NOPE behavior contributions in de-identified form for these community statistics. These retained records contain only the challenge-level contribution needed for that purpose. They do not contain an account or owner ID, pet ID, pet name, device ID, original response ID, batch or deletion ID, timestamp, or a stable identifier linking multiple responses to the deleted pet. They are not linked to your account or deleted pet in the application data model.</p>
         <p>We do not retain the deleted pet’s Style Check profile or Behavior Style result for this purpose.</p>
+        <p>Pet photos are not part of this de-identified statistical retention. No pet-photo image, filename, thumbnail, photo hash, or photo metadata is retained in these statistical records.</p>
         <p>Because these retained statistical records are no longer linked to the deleted pet in our application data model, we cannot later identify which records came from that pet for selective removal.</p>
         <p>These community insights describe behavior responses submitted within the app and should not be interpreted as population-wide scientific or veterinary statistics.</p>
 
         <h2>Deleting a Pet</h2>
         <p>When you delete a pet, Can Your Pet permanently removes the pet profile and pet-linked data, including current challenge responses, identifiable Style Check progress and responses, private Suggest a Quirk submissions, and stored app progress and related pet-specific state.</p>
+        <p>Deleting a pet also removes that pet’s locally stored photo as part of the deletion process. If photo cleanup is interrupted, the app’s deletion-recovery process retries the cleanup while the deleted pet remains unavailable and cannot be restored through synchronization.</p>
         <p>Deleting a pet does not delete other account-level data. De-identified challenge-level contributions may remain only as described under Community Statistics.</p>
 
         <h2>Data Security</h2>

@@ -305,13 +305,14 @@ for (const appPageHtml of [privacyHtml, supportHtml]) {
 
 for (const requiredPrivacyText of [
   'Privacy Policy',
-  'Last updated: September 2026',
+  'Last updated: September 28, 2026',
   'Can Your Pet is a pet behavior discovery app that lets you compare your pet’s everyday behaviors with other participating pets.',
   'This Privacy Policy explains what information the app collects, how it is used, and what is not collected.',
   'Information We Collect',
   'Pet information',
   'Pet species, currently Dog or Cat',
   'An optional pet name',
+  'An optional pet photo, stored locally on your device',
   'App usage information',
   'Pet names are not included in usage analytics.',
   'Anonymous account identifier',
@@ -333,6 +334,9 @@ for (const requiredPrivacyText of [
 }
 
 assert.doesNotMatch(privacyHtml, /<li>photo library access<\/li>/, 'privacy page must not broadly claim that photo-library access is never requested');
+assert.doesNotMatch(privacyHtml, /does not access your existing photos/i, 'privacy page must not deny access to a photo explicitly selected by the user');
+assert.doesNotMatch(privacyHtml, /<li>camera access<\/li>/, 'privacy page must not claim that camera access is never requested');
+assert.doesNotMatch(privacyHtml, /photos are only written, never selected/i, 'privacy page must not claim that photos can never be selected');
 
 for (const [pattern, message] of [
   [/<h2>Suggest a Quirk<\/h2>/, 'privacy page must disclose Suggest a Quirk'],
@@ -355,9 +359,25 @@ for (const [pattern, message] of [
   [/do not retain the deleted pet’s Style Check profile or Behavior Style result/, 'privacy page must exclude deleted Behavior Style retention'],
   [/cannot later identify which records came from that pet for selective removal/, 'privacy page must disclose the selective-removal limitation'],
   [/Deleting a pet does not delete other account-level data\./, 'privacy page must state the account-level deletion boundary'],
-  [/does not read or browse your photo library/, 'privacy page must preserve the photo-library read/browse limitation'],
-  [/add-only permission/, 'privacy page must preserve the Photos add-only disclosure'],
-  [/does not allow Can Your Pet to access your existing photos/, 'privacy page must preserve the existing-photo access limitation'],
+  [/Apple’s system photo picker/, 'privacy page must explain the Apple system photo picker'],
+  [/receives only the image you select/, 'privacy page must limit photo access to the explicitly selected image'],
+  [/does not browse your photo library/, 'privacy page must preserve the photo-library browse limitation'],
+  [/does not browse your photo library or request broad photo-library read access/, 'privacy page must exclude browsing and broad photo-library read permission'],
+  [/Take Photo[^<]*requests camera access only for the photo capture you initiate/, 'privacy page must explain user-initiated camera access'],
+  [/camera is not used continuously or in the background/, 'privacy page must exclude continuous or background camera use'],
+  [/resized and re-encoded for use in the app/, 'privacy page must explain local image normalization'],
+  [/does not intentionally retain[^<]*EXIF or GPS metadata/, 'privacy page must explain the restrained metadata boundary'],
+  [/Pet photos are stored locally on your device/, 'privacy page must state local-only pet-photo storage'],
+  [/not uploaded to Can Your Pet’s cloud service or synchronized through the Can Your Pet backend/, 'privacy page must exclude pet-photo cloud upload and backend synchronization'],
+  [/not used for Behavior Style calculations[^<]*behavior inference[^<]*community statistics[^<]*analytics[^<]*advertising[^<]*AI analysis/, 'privacy page must state the pet-photo use boundaries'],
+  [/remove a pet photo[^<]*locally stored photo is deleted[^<]*pet profile and behavior data remain/i, 'privacy page must distinguish Remove Photo from Delete Pet'],
+  [/Deleting a pet also removes that pet’s locally stored photo/, 'privacy page must include the local photo in Delete Pet'],
+  [/deletion-recovery process retries the cleanup[^<]*cannot be restored through synchronization/, 'privacy page must explain interrupted photo cleanup and no resurrection'],
+  [/Pet photos are not part of this de-identified statistical retention/, 'privacy page must exclude photos from statistical retention'],
+  [/No pet-photo image, filename, thumbnail, photo hash, or photo metadata is retained/, 'privacy page must exclude photo artifacts from retained statistics'],
+  [/Save Image[^<]*separate from selecting an existing pet photo through Apple’s system photo picker/, 'privacy page must distinguish Save Image from selecting a pet photo'],
+  [/Save Image uses add-only Photos access/, 'privacy page must preserve the Share Card add-only disclosure'],
+  [/Current generated Share Cards do not include the pet photo/, 'privacy page must describe the current Share Card boundary'],
   [/https:\/\/fenghuashen\.com\/can-your-pet\/support\//, 'privacy page must preserve the Support contact path']
 ]) {
   assert.match(privacyHtml, pattern, message);
